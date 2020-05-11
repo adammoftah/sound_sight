@@ -21,7 +21,7 @@ window.onload = function () {
       audioContext = new AudioContext();
       analyser = audioContext.createAnalyser();
       analyser.smoothingTimeConstant = 0.5;
-      analyser.fftSize = 256;
+      analyser.fftSize = 512 / 4;
 
       startSound();
     });
@@ -53,25 +53,66 @@ window.onload = function () {
   }
 };
 
-function drawCircle(context = context, freqValue) {
-  const x = canvas.width / 2;
-  const y = canvas.height / 2;
+// function drawStuff(context = context, freqValue) {
+//   const x = canvas.width / 2;
+//   const y = canvas.height / 2;
 
-  context.beginPath();
-  context.arc(
-    x - freqValue / 8,
-    y - freqValue / 8,
-    Math.abs(freqValue - 120) * 5,
-    0,
-    2 * Math.PI,
-    false
-  );
-  context.strokeStyle = "#FF0000";
-  context.fillStyle = "#0077cc";
+//   context.beginPath();
+//   context.arc(
+//     x - freqValue / 8,
+//     y - freqValue / 8,
+//     Math.abs(freqValue - 120) * 5,
+//     0,
+//     2 * Math.PI,
+//     false
+//   );
 
-  context.fill();
-  context.lineWidth = 2;
-  context.stroke();
+//   context.strokeStyle = "#FF0000";
+//   context.fillStyle = "#0077cc";
+
+//   context.fill();
+//   context.lineWidth = 5;
+//   context.stroke();
+// }
+function drawStuff(context = context, freqValue) {
+  for (let i = 1; i < 2; i++) {
+    const x = (canvas.width / i) * 0.5;
+    const y = (canvas.height / i) * 0.8;
+
+    context.beginPath();
+    context.arc(
+      x - freqValue / 8,
+      y - freqValue / 8,
+      Math.abs(freqValue - 120) * 5,
+      0,
+      2 * Math.PI,
+      false
+    );
+    context.strokeStyle = "#FF0000";
+    context.fillStyle = "#0077cc";
+
+    context.fill();
+    context.lineWidth = 5;
+    context.stroke();
+  }
+}
+
+function drawOtherStuff() {
+  var sliceWidth = (canvas.width * 1.0) / freqArray.length;
+
+  var oscilloX = 0;
+  for (var i = 0; i < freqArray.length; i++) {
+    var vv = freqArray[i] / 40.0;
+    var yy = (vv * 200) / 5;
+
+    if (i === 0) {
+      context.moveTo(oscilloX, yy);
+    } else {
+      context.lineTo(oscilloX, yy);
+    }
+
+    oscilloX += sliceWidth;
+  }
 }
 
 function update() {
@@ -83,8 +124,9 @@ function update() {
 
   for (var i = 0; i < freqArray.length; i += 1) {
     var point = freqArray[i];
-    drawCircle(context, point, i);
+    drawStuff(context, point, i);
   }
+  drawOtherStuff();
 
   requestAnimationFrame(update);
 }
