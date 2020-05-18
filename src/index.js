@@ -216,13 +216,20 @@ import "./styles/index.scss";
 
 //   requestAnimationFrame(update);
 // }
-var dataset = [12, 19, 8, 17, 22, 9, 15, 12, 22, 25, 17, 12, 25, 16];
+var indexVariable = 0;
+setInterval(function () {
+  indexVariable = (++indexVariable % 255) + Math.random() * 50; // SET { 1-360 }
+}, 750);
 window.onload = function () {
-  var frequencyData = new Uint8Array(200);
+  var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  var audioElement = document.getElementById("audioElement");
+  var audioSrc = audioCtx.createMediaElementSource(audioElement);
+  var analyser = audioCtx.createAnalyser();
+  var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 
-  var svgHeight = "300";
-  var svgWidth = "1200";
-  var barPadding = "1";
+  var svgHeight = window.innerHeight / 2;
+  var svgWidth = "700";
+  var barPadding = "0";
 
   function createSvg(parent, height, width) {
     return d3
@@ -233,44 +240,88 @@ window.onload = function () {
   }
 
   var svg = createSvg("body", svgHeight, svgWidth);
+  var svg2 = createSvg("body", svgHeight, svgWidth);
 
   // Create our initial D3 chart.
+  // svg2
+  //   .selectAll("rect")
+  //   .data(frequencyData)
+  //   .enter()
+  //   .append("rect")
+  //   .attr("x", function (d, i) {
+  //     return i * (svgWidth / frequencyData.length);
+  //   })
+  //   .attr("width", svgWidth / frequencyData.length - barPadding);
+
   svg
-    .selectAll("rect")
+    .selectAll("circle")
     .data(frequencyData)
     .enter()
-    .append("rect")
-    .attr("x", function (d, i) {
-      return i * (svgWidth / frequencyData.length);
+    .append("circle")
+    .attr("cx", function (d, i) {
+      return (
+        (window.innerWidth / frequencyData.length) * i * 100 * Math.random()
+      );
     })
-    .attr("width", svgWidth / frequencyData.length - barPadding);
-
-  var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  var audioElement = document.getElementById("audioElement");
-  var audioSrc = audioCtx.createMediaElementSource(audioElement);
-  var analyser = audioCtx.createAnalyser();
+    .attr("cy", function (d, i) {
+      return (
+        (window.innerHeight / frequencyData.length) * i * Math.random() +
+        100 * Math.random()
+      );
+    });
 
   // Bind our analyser to the media element source.
   audioSrc.connect(analyser);
   audioSrc.connect(audioCtx.destination);
+  let animationCount = 0;
+
+  const changeAnimationStatus = () => {
+    animationCount += 1;
+  };
+
+  const returnAnimationStatus = () => {
+    return animationCount;
+  };
+
+  let currentCount = 0;
+  currentCount += returnAnimationStatus();
+
   function renderChart() {
-    requestAnimationFrame(renderChart);
+    if (currentCount === returnAnimationStatus()) {
+      requestAnimationFrame(renderChart);
+    }
 
     // Copy frequency data to frequencyData array.
     analyser.getByteFrequencyData(frequencyData);
 
     // Update d3 chart with new data.
+    // svg2
+    //   .selectAll("rect")
+    //   .data(frequencyData)
+    //   .attr("y", function (d) {
+    //     return svgHeight - d;
+    //   })
+    //   .attr("height", function (d) {
+    //     return d;
+    //   })
+    //   .attr("fill", function (d) {
+    //     return "rgb(" + indexVariable + ", 0, " + d + ")";
+    //   });
     svg
-      .selectAll("rect")
+      .selectAll("circle")
       .data(frequencyData)
-      .attr("y", function (d) {
-        return svgHeight - d;
-      })
-      .attr("height", function (d) {
-        return d;
+      .attr("r", function (d) {
+        return (
+          // (((window.innerWidth > window.innerHeight
+          //   ? window.innerHeight
+          //   : window.innerWidth) /
+          //   2) *
+          d
+          // 5
+        );
       })
       .attr("fill", function (d) {
-        return "rgb(0, 0, " + d + ")";
+        return "rgb(" + indexVariable + ", 0, " + d + ")";
       });
   }
 

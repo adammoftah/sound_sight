@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="./dist/main.css" />
   </head>
   <body>
-    <h1>Hi</h1>
-    <button id="sample"><a>play sample track</a></button>
+    <h1 id="title">Sound Sight</h1>
     <canvas id="canvas" width="window.innerWidth" height="window.innerHeight""></canvas>
-    <div id="graph"></div>
+    <div id="graph" ></div>
+    <div id="graph2" ></div>
 
-    <audio id="audioElement" src="./assets/followurdreams.mp3"></audio>
-    <div>
-      <button onclick="document.getElementById('audioElement').play()">Play the Audio</button>
-      <button onclick="document.getElementById('audioElement').pause()">Pause the Audio</button>
+    <audio id="audioElement" src="./assets/iknowwhoiam.mp3"></audio>
+    <div id="controls">
+      <button onclick="document.getElementById('audioElement').play()">Play</button>
+      <button onclick="document.getElementById('audioElement').pause()">Pause</button>
       <button onclick="document.getElementById('audioElement').volume+=0.1">Increase Volume</button>
       <button onclick="document.getElementById('audioElement').volume-=0.1">Decrease Volume</button>
     </div>
