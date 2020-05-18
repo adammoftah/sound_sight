@@ -6,19 +6,81 @@
     <script src="./dist/main.js" charset="utf-8"></script>
     <title>Sound Sight</title>
     <link rel="stylesheet" href="./dist/main.css" />
+    <script
+      src="https://kit.fontawesome.com/ca604ca0b8.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <h1 id="title">Sound Sight</h1>
-    <canvas id="canvas" width="window.innerWidth" height="window.innerHeight""></canvas>
-    <div id="graph" ></div>
-    <div id="graph2" ></div>
+    <div id="graph" style="z-index: 5;"></div>
+    <!-- <div id="graph2" style="position: fixed;"></div> -->
 
-    <audio id="audioElement" src="./assets/iknowwhoiam.mp3"></audio>
+    <audio id="audioElement" src="./assets/followurdreams.mp3"></audio>
+    <!-- <audio id="audioElement" src="./assets/iknowwhoiam.mp3"></audio> -->
+    <div id="personal-links-container">
+      <a
+        href="https://github.com/adammoftah/sound_sight"
+        target="_blank"
+        data="Sound Sight Github Repo"
+      >
+        <i class="fab fa-github" id="github-link"></i>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/adam-moftah/"
+        target="_blank"
+        data="My LinkedIn"
+      >
+        <i class="fab fa-linkedin-in" id="linkedin-link"></i>
+      </a>
+
+      <a
+        href="https://angel.co/adam-moftah"
+        target="_blank"
+        data="My AngelList"
+      >
+        <i class="fab fa-angellist" id="angellist-link"></i>
+      </a>
+
+      <a
+        href="https://adammoftah.github.io"
+        target="_blank"
+        data="My Portfolio Website"
+      >
+        <i class="fas fa-external-link-alt" id="portfolio-link"></i>
+      </a>
+
+      <a href="mailto: adam.moftah@gmail.com" data="Email me">
+        <i class="far fa-envelope" id="email-link"></i>
+      </a>
+    </div>
     <div id="controls">
-      <button onclick="document.getElementById('audioElement').play()">Play</button>
-      <button onclick="document.getElementById('audioElement').pause()">Pause</button>
-      <button onclick="document.getElementById('audioElement').volume+=0.1">Increase Volume</button>
-      <button onclick="document.getElementById('audioElement').volume-=0.1">Decrease Volume</button>
+      <button onclick="document.getElementById('audioElement').play()">
+        Play
+      </button>
+      <button onclick="document.getElementById('audioElement').pause()">
+        Pause
+      </button>
+      <button onclick="document.getElementById('audioElement').volume+=0.1">
+        Increase Volume
+      </button>
+      <button onclick="document.getElementById('audioElement').volume-=0.1">
+        Decrease Volume
+      </button>
+    </div>
+
+    <div class="file-input">
+      <input
+        type="file"
+        id="file-input"
+        accept="audio/*, .m4a, .mp3, .wav, .flac .ogg, .aac"
+      />
+      <div class="file-input-container">
+        <label for="file-input" id="file-input-label"
+          >Choose a local file for visualizer</label
+        >
+      </div>
     </div>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   </body>

@@ -1,3 +1,9 @@
 body {
-  background-color: lavender;
+  background-image: radial-gradient(black, gray);
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+#personal-links-container {
+  color: purple;
 }
