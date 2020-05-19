@@ -1,9 +1,28 @@
 body {
-  background-image: radial-gradient(black, gray);
-  min-width: 100vw;
+  align-items: center;
+  background-image: radial-gradient(#464fbd, #821584, #8c3333);
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
+  min-width: 97vw;
+}
+
+#title {
+  color: #c09eff;
 }
 
 #personal-links-container {
   color: purple;
+}
+
+.file-input-container {
+  background-color: blue;
+  border-radius: 4px;
+  text-align: center;
+  width: 100px;
+}
+
+#utilities {
+  display: flex;
 }

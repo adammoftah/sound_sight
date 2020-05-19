@@ -1,74 +1,44 @@
 import "./styles/index.scss";
 
 let indexVariable = 50;
+const graph = document.getElementById("visual");
 setInterval(function () {
-  indexVariable = (++indexVariable % 255) + Math.random() * 50 + 90;
+  indexVariable = (++indexVariable % 255) + Math.random() * 50 + 20;
 }, 750);
 
-window.onload = function () {
-  document.getElementById("file-input-label").onclick = () => {
-    if (!contextCreated) {
-      createContext();
-    }
-  };
+let analyser, frequencyData, svg;
 
-  const createContext = () => {
-    contextCreated = true;
-    context = new AudioContext();
-    analyser = context.createAnalyser();
-    analyser.minDecibels = -105;
-    analyser.maxDecibels = -25;
-    analyser.smoothingTimeConstant = 0.8;
-    gain = context.createGain();
-    let src = context.createMediaElementSource(audio);
-    src.connect(gain);
-    gain.connect(analyser);
-    analyser.connect(context.destination);
-    createVisualizer();
-  };
-  const createVisualizer = () => {
-    if (contextCreated) {
-      changeAnimationStatus();
-      removeVisualizer();
-    }
-  };
-
-  const removeVisualizer = () => {
-    d3.selectAll("svg").remove();
-  };
-
+function startVisualizer() {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const audioElement = document.getElementById("audioElement");
   const audioSrc = audioCtx.createMediaElementSource(audioElement);
-  const analyser = audioCtx.createAnalyser();
-  const frequencyData = new Uint8Array(indexVariable);
+  analyser = audioCtx.createAnalyser();
+  frequencyData = new Uint8Array(indexVariable);
 
-  const svgHeight = window.innerHeight;
-  const svgWidth = window.innerWidth - 50;
-  const barPadding = "0";
+  createSvg();
+  // Bind our analyser to the media element source.
+  audioSrc.connect(analyser);
+  audioSrc.connect(audioCtx.destination);
 
-  function createSvg(parent, height, width) {
-    return d3
-      .select(parent)
-      .append("svg")
-      .attr("height", height)
-      .attr("width", width);
-  }
+  // Run the loop
+  renderChart();
+}
 
-  let svg = createSvg("body", svgHeight, svgWidth);
-  // let svg2 = createSvg("body", svgHeight, svgWidth);
+window.onload = function () {
+  setDemoSong();
+  startVisualizer();
+};
 
-  // Create our initial D3 chart.
-  // svg2
-  //   .selectAll("rect")
-  //   .data(frequencyData)
-  //   .enter()
-  //   .append("rect")
-  //   .attr("x", function (d, i) {
-  //     return i * (svgWidth / frequencyData.length);
-  //   })
-  //   .attr("width", svgWidth / frequencyData.length - barPadding);
-
+function createSvg() {
+  const svgHeight = (window.innerHeight / 5) * 3;
+  const svgWidth = window.innerWidth - 100;
+  // const barPadding = "0";
+  // d3.selectAll("svg").remove();
+  svg = d3
+    .select(graph)
+    .append("svg")
+    .attr("height", svgHeight)
+    .attr("width", svgWidth);
   svg
     .selectAll("circle")
     .data(frequencyData)
@@ -92,65 +62,64 @@ window.onload = function () {
         // indexVariable + 250
       );
     });
+}
 
-  // Bind our analyser to the media element source.
-  audioSrc.connect(analyser);
-  audioSrc.connect(audioCtx.destination);
-  let animationCount = 0;
+function renderChart() {
+  // let currentCount = 0;
+  // currentCount += returnAnimationStatus();
+  // if (currentCount === returnAnimationStatus()) {
+  requestAnimationFrame(renderChart);
+  // }
 
-  const changeAnimationStatus = () => {
-    animationCount += 1;
-  };
+  // Copy frequency data to frequencyData array.
+  analyser.getByteFrequencyData(frequencyData);
+  // createSvg();
+  svg
+    .selectAll("circle")
+    .data(frequencyData)
+    .attr("r", function (d) {
+      return (
+        // (((window.innerWidth > window.innerHeight
+        //   ? window.innerHeight
+        //   : window.innerWidth) /
+        //   2) *
+        d * 1.5
+        // 5
+      );
+    })
+    .attr("fill", function (d) {
+      return "rgb(" + d + "," + 0 + ", " + (255 - d) + ")";
+    });
+}
 
-  const returnAnimationStatus = () => {
-    return animationCount;
-  };
-
-  let currentCount = 0;
-  currentCount += returnAnimationStatus();
-
-  function renderChart() {
-    if (currentCount === returnAnimationStatus()) {
-      requestAnimationFrame(renderChart);
-    }
-
-    // Copy frequency data to frequencyData array.
-    analyser.getByteFrequencyData(frequencyData);
-
-    // Update d3 chart with new data.
-    // svg2
-    //   .selectAll("rect")
-    //   .data(frequencyData)
-    //   .attr("y", function (d) {
-    //     return svgHeight - d;
-    //   })
-    //   .attr("height", function (d) {
-    //     return d;
-    //   })
-    //   .attr("fill", function (d) {
-    //     return "rgb(" + indexVariable + ", 0, " + d + ")";
-    //   });
-    svg
-      .selectAll("circle")
-      .data(frequencyData)
-      .attr("r", function (d) {
-        return (
-          // (((window.innerWidth > window.innerHeight
-          //   ? window.innerHeight
-          //   : window.innerWidth) /
-          //   2) *
-          d * 1.5
-          // 5
-        );
-      })
-      .attr("fill", function (d) {
-        return "rgb(" + d + "," + 0 + ", " + (255 - d) + ")";
-      });
+document.getElementById("file-input").onchange = function () {
+  const files = this.files;
+  if (files.length > 0) {
+    const src = URL.createObjectURL(files[0]);
+    const trackName = files[0].name
+      .split(".")
+      .slice(0, files[0].name.split(".").length - 1)
+      .join("");
+    changeSong(src, trackName);
   }
-
-  // Run the loop
-  renderChart();
 };
+
+document.getElementById("demo-button").onclick = function () {
+  setDemoSong();
+};
+
+function setDemoSong() {
+  const src = "./assets/followurdreams.mp3";
+  const trackName = "follow ur dreams <3";
+  changeSong(src, trackName);
+}
+
+function changeSong(src, trackName) {
+  const audioElement = document.getElementById("audioElement");
+  audioElement.src = src;
+  audioElement.load();
+  document.getElementById("track-name").innerText = trackName;
+}
 
 // things that change:
 // index var, cy, cx, frequencyData
