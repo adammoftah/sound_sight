@@ -7,14 +7,10 @@
     <link rel="stylesheet" href="./dist/main.css" />
   </head>
   <body>
-    <h1 id="title">Sound Sight</h1>
-    <div id="visual"></div>
-    <!-- <div id="graph2" style="position: fixed;"></div> -->
-
-    <!-- <audio id="audio"></audio> -->
-    <!-- <audio id="audioElement" src="./assets/iknowwhoiam.mp3"></audio> -->
-    <div id="utilities">
+    <div id="header">
+      <span id="title">SOUND SIGHT</span>
       <div id="personal-links-container">
+        &nbsp;
         <a
           href="https://github.com/adammoftah/sound_sight"
           target="_blank"
@@ -22,7 +18,7 @@
         >
           <i class="fab fa-github" id="github-link"></i>
         </a>
-
+        &nbsp;
         <a
           href="https://www.linkedin.com/in/adam-moftah/"
           target="_blank"
@@ -30,7 +26,7 @@
         >
           <i class="fab fa-linkedin-in" id="linkedin-link"></i>
         </a>
-
+        &nbsp;
         <a
           href="https://angel.co/adam-moftah"
           target="_blank"
@@ -38,53 +34,146 @@
         >
           <i class="fab fa-angellist" id="angellist-link"></i>
         </a>
-
+        &nbsp;
         <a
           href="https://adammoftah.github.io"
           target="_blank"
           data="My Portfolio Website"
         >
-          <i class="fas fa-external-link-alt" id="portfolio-link"></i>
+          <i class="fas fa-smile" id="smile"></i>
         </a>
-
-        <a href="mailto: adam.moftah@gmail.com" data="Email me">
-          <i class="far fa-envelope" id="email-link"></i>
-        </a>
-      </div>
-      <div id="controls">
-        <button id="demo-button">
-          Demo Song!
-        </button>
-        <button onclick="document.getElementById('audioElement').play()">
-          Play
-        </button>
-        <button onclick="document.getElementById('audioElement').pause()">
-          Pause
-        </button>
-        <button onclick="document.getElementById('audioElement').volume+=0.1">
-          Increase Volume
-        </button>
-        <button onclick="document.getElementById('audioElement').volume-=0.1">
-          Decrease Volume
-        </button>
-      </div>
-      <div id="track-name"></div>
-
-      <div class="file-input">
-        <input
-          type="file"
-          id="file-input"
-          accept="audio/*, .m4a, .mp3, .wav, .flac .ogg, .aac"
-          style="display: none;"
-        />
-        <div class="file-input-container">
-          <label for="file-input" id="file-input-label">
-            Upload File
-          </label>
-        </div>
+        &nbsp;
+        <i class="fas fa-info-circle" id="info-link" data="Information"></i>
       </div>
     </div>
-    <audio id="audioElement" controls></audio>
+    <div id="visual"></div>
+    <!-- <div id="graph2" style="position: fixed;"></div> -->
+
+    <!-- <audio id="audio"></audio> -->
+    <!-- <audio id="audioElement" src="./assets/iknowwhoiam.mp3"></audio> -->
+    <div id="utilities">
+      <div id="controls">
+        <button
+          id="button-2"
+          onclick="document.getElementById('audioElement').play()"
+        >
+          Play
+        </button>
+        <button
+          id="button-3"
+          onclick="document.getElementById('audioElement').pause()"
+        >
+          Pause
+        </button>
+        <button
+          id="button-4"
+          onclick="document.getElementById('audioElement').volume+=0.1"
+        >
+          Increase Volume
+        </button>
+        <button
+          id="button-5"
+          onclick="document.getElementById('audioElement').volume-=0.1"
+        >
+          Decrease Volume
+        </button>
+        <div id="demo-button-1">
+          <button id="button-0">
+            Demo Song 1
+          </button>
+        </div>
+        <div id="demo-button-2">
+          <button id="button-1">
+            Demo Song 2
+          </button>
+        </div>
+        <div class="file-input">
+          <input
+            type="file"
+            id="file-input"
+            accept="audio/*, .m4a, .mp3, .wav, .flac .ogg, .aac"
+            style="display: none;"
+          />
+          <div class="file-input-container">
+            <button>
+              <label for="file-input" id="file-input-label">
+                Upload File
+              </label>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="track-name">
+        <span>Track Name: </span>
+        &nbsp;
+        <span id="track-name"></span>
+      </div>
+    </div>
+    <audio id="audioElement"></audio>
+    <section id="modal">
+      <div class="modal-container">
+        <p class="modal-title"><strong>Welcome to Sound Sight!</strong></p>
+        <br />
+        <p>
+          Sound Sight is an audio visualizer that uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API"
+            target="_blank"
+            >Web Audio API</a
+          >
+          and <a href="https://d3js.org" target="_blank">D3.js</a>
+          to show you your sound like you've never seen it before! Upload your
+          favorite audio file or choose the demo song to check out some pretty
+          sounds!
+        </p>
+        <br />
+        <div>
+          Interested in me or my code? Hungry for another thing to look at
+          before you go about your life?
+          <ul>
+            <li>
+              <a
+                href="https://github.com/adammoftah/sound_sight"
+                target="_blank"
+                >Sound Sight's Repo</a
+              >
+            </li>
+            <li>
+              <a href="https://adammoftah.github.io" target="_blank"
+                >My Portfolio</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/adam-moftah/"
+                target="_blank"
+              >
+                LinkedIn profile</a
+              >
+            </li>
+            <li>
+              <a href="https://angel.co/adam-moftah" target="_blank">
+                AngelList profile</a
+              >
+            </li>
+            <li>
+              <a href="mailto: adam.moftah@gmail.com">Email me!</a>
+            </li>
+          </ul>
+        </div>
+        <br />
+        <p class="center-modal">Have fun!</p>
+        <p>
+          <em>
+            For optimal functinoality, please use
+            <a href="https://www.google.com/chrome/">Google Chrome</a>.
+          </em>
+        </p>
+        <div id="close-modal">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+    </section>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="./dist/main.js" charset="utf-8"></script>
     <script
