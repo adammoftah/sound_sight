@@ -126,13 +126,13 @@ document.getElementById("modal").onclick = (e) => {
 };
 
 function setDemoSong1() {
-  const src = "./assets/followurdreams.mp3";
+  const src = "./dist/followurdreams.mp3";
   const trackName = "follow ur dreams <3";
   changeSong(src, trackName);
 }
 
 function setDemoSong2() {
-  const src = "./assets/Kuku.m4a";
+  const src = "./dist/Kuku.m4a";
   const trackName = "Kuku";
   changeSong(src, trackName);
 }
