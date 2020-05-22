@@ -140,7 +140,7 @@ function setDemoSong2() {
 function changeSong(src, trackName) {
   const audioElement = document.getElementById("audioElement");
   audioElement.src = src;
-  audioElement.load();
+  // audioElement.load();
   document.getElementById("track-name").innerText = trackName;
 }
 
