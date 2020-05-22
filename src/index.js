@@ -28,7 +28,7 @@ function startVisualizer() {
 
 window.onload = function () {
   setDemoSong1();
-  startVisualizer();
+  // startVisualizer();
 };
 
 function createSvg() {
@@ -119,6 +119,7 @@ infoLink.onclick = () => {
 
 document.getElementById("close-modal").onclick = () => {
   modal.style.display = "none";
+  startVisualizer();
 };
 
 document.getElementById("modal").onclick = (e) => {
