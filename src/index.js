@@ -119,6 +119,7 @@ infoLink.onclick = () => {
 
 document.getElementById("close-modal").onclick = () => {
   modal.style.display = "none";
+  console.log("this the new one");
   startVisualizer();
 };
 
