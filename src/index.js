@@ -27,7 +27,7 @@ function startVisualizer() {
 }
 
 window.onload = function () {
-  setDemoSong1();
+  // setDemoSong1();
   // startVisualizer();
 };
 
@@ -120,6 +120,7 @@ infoLink.onclick = () => {
 document.getElementById("close-modal").onclick = () => {
   modal.style.display = "none";
   console.log("this the new one");
+  setDemoSong1();
   startVisualizer();
 };
 
