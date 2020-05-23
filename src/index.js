@@ -18,24 +18,15 @@ function startVisualizer() {
   frequencyData = new Uint8Array(300);
 
   createSvg();
-  // Bind our analyser to the media element source.
   audioSrc.connect(analyser);
   audioSrc.connect(audioCtx.destination);
 
-  // Run the loop
   renderChart();
 }
-
-window.onload = function () {
-  // setDemoSong1();
-  // startVisualizer();
-};
 
 function createSvg() {
   const svgHeight = window.innerHeight * 0.88;
   const svgWidth = window.innerWidth;
-  // const barPadding = "0";
-  // d3.selectAll("svg").remove();
   svg = d3
     .select(graph)
     .append("svg")
@@ -48,10 +39,6 @@ function createSvg() {
     .append("circle")
     .attr("cx", function (d, i) {
       return (
-        // (((window.innerWidth / frequencyData.length) * i +
-        //   100 * Math.random()) %
-        //   5) +
-        // 500
         (window.innerWidth / frequencyData.length) * i + 100 * Math.random()
       );
     })
@@ -60,33 +47,20 @@ function createSvg() {
         ((window.innerHeight / frequencyData.length) * i +
           200 * Math.random()) %
         500
-        // indexVariable + 250
       );
     });
 }
 
 function renderChart() {
-  // let currentCount = 0;
-  // currentCount += returnAnimationStatus();
-  // if (currentCount === returnAnimationStatus()) {
   requestAnimationFrame(renderChart);
-  // }
-
-  // Copy frequency data to frequencyData array.
   analyser.getByteFrequencyData(frequencyData);
+
   // createSvg();
   svg
     .selectAll("circle")
     .data(frequencyData)
     .attr("r", function (d) {
-      return (
-        // (((window.innerWidth > window.innerHeight
-        //   ? window.innerHeight
-        //   : window.innerWidth) /
-        //   2) *
-        d * 1.5
-        // 5
-      );
+      return d * 1.5;
     })
     .attr("fill", function (d) {
       return "rgb(" + d + "," + 0 + ", " + (255 - d) + ")";
@@ -119,7 +93,7 @@ infoLink.onclick = () => {
 
 document.getElementById("close-modal").onclick = () => {
   modal.style.display = "none";
-  console.log("this the new one");
+  console.log("have fun :)");
   setDemoSong1();
   startVisualizer();
 };
@@ -146,6 +120,5 @@ function changeSong(src, trackName) {
   document.getElementById("track-name").innerText = trackName;
 }
 
-// audioElement.load();
 // things that change:
 // index var, cy, cx, frequencyData
