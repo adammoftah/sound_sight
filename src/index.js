@@ -94,7 +94,11 @@ infoLink.onclick = () => {
 document.getElementById("close-modal").onclick = () => {
   modal.style.display = "none";
   console.log("have fun :)");
-  setDemoSong1();
+  const audioElement = document.getElementById("audioElement");
+  const src = "./dist/followurdreams.mp3";
+  const trackName = "follow ur dreams <3";
+  audioElement.src = src;
+  document.getElementById("track-name").innerText = trackName;
   startVisualizer();
 };
 
@@ -118,6 +122,7 @@ function changeSong(src, trackName) {
   const audioElement = document.getElementById("audioElement");
   audioElement.src = src;
   document.getElementById("track-name").innerText = trackName;
+  audioElement.play();
 }
 
 // things that change:
